@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+	<h1>{% block title %}Édition d'un item "{{ item['name'] }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+	<form method="post">
+		<label for="name">Nom</label>
+		<input type="text" name="name" id="name"
+			value="{{ request.form['name'] or item['name'] }}" required>
+		<label for="count">Nombre</label>
+		<input type="number" name="count" id="count"
+			value="{{ request.form['count'] or item['total_count'] }}">
+		<label for="comment">Commentaire sur la modification</label>
+		<input type="text" name="comment" id="comment" value="{{ request.form['comment'] }}">
+		<input type="submit" value="Enregistrer">
+	</form>
+	<hr>
+	<form action="{{ url_for('inventory.delete', id=item['id']) }}" method="post">
+		<input class="danger" type="submit" value="Supprimer" onclick="return confirm('Êtes vous certain ?');">
+	</form>
+{% endblock %}
